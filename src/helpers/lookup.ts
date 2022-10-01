@@ -31,14 +31,9 @@ export function lookup(i18n: I18n, scope: Scope, options: Dict = {}): any {
     .get(localeType === "string" ? locale : typeof locale)
     .slice();
 
-  scope = getFullScope(i18n, scope, options)
-    .split(i18n.defaultSeparator)
-    .map((component) => i18n.transformKey(component))
-    .join(".");
+  scope = getFullScope(i18n, scope, options);
 
-  const entries = locales.map((locale) =>
-    get(i18n.translations, [locale, scope].join(".")),
-  );
+  const entries = [scope];
 
   entries.push(options.defaultValue);
 
