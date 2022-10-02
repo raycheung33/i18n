@@ -1,7 +1,10 @@
+import { get } from "lodash";
+
 import { Dict, Scope } from "../typing";
 import { I18n } from "../I18n";
 import { isSet } from "./isSet";
 import { getFullScope } from "./getFullScope";
+import { inferType } from "./inferType";
 
 /**
  * Find and process the translation using the provided scope and options.
@@ -21,9 +24,19 @@ import { getFullScope } from "./getFullScope";
 export function lookup(i18n: I18n, scope: Scope, options: Dict = {}): any {
   options = { ...options };
 
-  scope = getFullScope(i18n, scope, options);
+  const locale = "locale" in options ? options.locale : i18n.locale;
+  const localeType = inferType(locale);
 
-  const entries = [scope];
+  const locales = i18n.locales
+    .get(localeType === "string" ? locale : typeof locale)
+    .slice();
+
+  scope = [getFullScope(i18n, scope, options)]
+    .map((component) => i18n.transformKey(component))
+
+  const entries = locales.map((locale) =>
+    get(i18n.translations, [locale, scope].join(".")),
+  );
 
   entries.push(options.defaultValue);
 

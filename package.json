@@ -42,7 +42,7 @@
     "prettier": "*",
     "ts-jest": "*",
     "typedoc": "beta",
-    "typescript": "*",
+    "typescript": "^4.8.4",
     "webpack": "*",
     "webpack-cli": "*"
   },
