@@ -39,7 +39,6 @@ import {
   numberToHumanSize,
   parseDate,
   pluralize,
-  propertyFlatList,
   strftime,
   timeAgoInWords,
 } from "./helpers";
