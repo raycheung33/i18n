@@ -1,0 +1,32 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.pluralize = void 0;
+const isSet_1 = require("./isSet");
+const lookup_1 = require("./lookup");
+function pluralize(i18n, count, scope, options) {
+    options = Object.assign({}, options);
+    let translations;
+    let message;
+    if (typeof scope === "object" && scope) {
+        translations = scope;
+    }
+    else {
+        translations = (0, lookup_1.lookup)(i18n, scope, options);
+    }
+    if (!translations) {
+        return i18n.missingTranslation.get(scope, options);
+    }
+    const pluralizer = i18n.pluralization.get(options.locale);
+    const keys = pluralizer(i18n, count);
+    while (keys.length) {
+        const key = keys.shift();
+        if ((0, isSet_1.isSet)(translations[key])) {
+            message = translations[key];
+            break;
+        }
+    }
+    options.count = count;
+    return i18n.interpolate(i18n, message, options);
+}
+exports.pluralize = pluralize;
+//# sourceMappingURL=pluralize.js.map
