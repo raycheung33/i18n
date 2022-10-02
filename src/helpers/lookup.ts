@@ -36,10 +36,8 @@ export function lookup(i18n: I18n, scope: Scope, options: Dict = {}): any {
     .map((component) => i18n.transformKey(component))
     .join(".");
 
-  const entries = locales.map((locale) =>
-    get(i18n.translations, [locale, scope].join(".")),
-  );
-
+  const language = i18n.translations[locale];
+  const entries = [language[scope]];
   entries.push(options.defaultValue);
 
   return entries.find((entry) => isSet(entry));

@@ -244,11 +244,7 @@ export class I18n {
    * @returns {void}
    */
   public store(translations: Dict): void {
-    const map = propertyFlatList(translations);
-
-    map.forEach((path) =>
-      set(this.translations, path, get(translations, path)),
-    );
+    this.translations = translations;
 
     this.hasChanged();
   }
